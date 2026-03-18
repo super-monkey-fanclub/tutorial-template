@@ -1,34 +1,19 @@
 Usage
 =====
 
-.. _installation:
+.. _startdatabase:
 
-Installation
+Start Database
 ------------
 
-To use Lumache, first install it using pip:
+To start the database (as it is local during development), cd to backend and run the command ''python manage.py runserver''
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   cd backend
+   python manage.py runserver
 
-Creating recipes
+Start App
 ----------------
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
-
-.. autofunction:: lumache.get_random_ingredients
-
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
-
-.. autoexception:: lumache.InvalidKindError
-
-For example:
-
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
-
+To run the app, navigate to ''main.dart'' and run without debugging. Choose any browser when it is prompted.
