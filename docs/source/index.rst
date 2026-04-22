@@ -19,5 +19,7 @@ Contents
    login
    joinsoc
    review
+   database
+   
 
 Unify hosts its documentation on Read the Docs.
