@@ -6,12 +6,14 @@ Login
 Login/Sign up
 ---------------
 
-To log in or sign up, either click the top right user icon, or the "Join a Society today" button
+To log in or sign up, either click the top right user icon, or the "Join a Society today" button.
 You will be prompted to input your email and password. If you have not created an account, use the "Create Account" button.
 
 .. image:: images/Login.png
 
+
 .. _signup:
+
 Sign up
 ----------------
 
