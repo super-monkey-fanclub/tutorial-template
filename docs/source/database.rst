@@ -23,3 +23,5 @@ To view the contents of the database, follow this `link <http://127.0.0.1:8000/a
 
 Navigating the database
 -----------------------
+
+After logging in, all tables will be visible. If you sign up on the sign up page in the website, it will appear in the users table. You can use this feature to track all data within the database.
