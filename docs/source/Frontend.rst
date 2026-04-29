@@ -23,3 +23,9 @@ One consistent colour theme, featuring the colours represented in the University
 Seed colour: 0xFF003087
 Primary colour: 0xFF003087
 Secondary colour: 0xFF7B2D8E
+Background colour: 0x29FFFFFF 
+Error colour: 0xFFBA1A1A
+Text colour: Not fixed, readable contrast via code:
+
+
+Pop-up colour:
