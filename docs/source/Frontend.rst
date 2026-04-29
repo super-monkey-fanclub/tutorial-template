@@ -47,6 +47,9 @@ Pages
 main.dart
 ---------
 
+Theme
+------
+
 .. code-block:: dart
 
   class UnifyApp extends StatelessWidget {
@@ -75,12 +78,18 @@ main.dart
 
 This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, annd ensures it is the first page shown to the user when starting the app.
 
+User login data
+----------------
+
 .. code-block:: dart
 
   class _HomePageState extends State<HomePage> {
     static const String _sessionUserStorageKey = 'unify.current_user';
 
 This section of code uses a const key for saving/loading the user login data by storing it in local storage.
+
+Navigation Bar
+---------------
 
 .. code-block:: dart
 
@@ -128,3 +137,166 @@ This section of code uses a const key for saving/loading the user login data by 
       ),
 
 This section of code creates the Navigation Bar at the top of the page. It creates a Account button which links to the login page, an About us button which links to the About Us page, and a search bar used to search for societies. These are all in the far right of the navigation bar, and the search bar extends when pressed. 
+
+Intro Text
+-----------
+
+  .. code-block:: dart
+
+  body: SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Welcome${_currentUser == null ? '' : ', ${_currentUser!['name'] ?? 'back'}'}',
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Find societies that match your interests and connect with students faster.',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(height: 1.35),
+            ),
+
+This code displays the text at the top of the page, "Welcome" and "Find societies that match your interests and connect with students faster"
+
+Joined societies list - Logged in + Not in any society
+-------------------------------------------------------
+
+.. code-block:: dart
+
+  if (joined.isEmpty) {
+      return Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              const Icon(Icons.info_outline),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'You haven\'t joined any societies yet',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      'Tap "Find societies" to browse and join groups.',
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: _openSocietiesPage,
+                child: const Text('Find societies'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+
+Joined societies list - Logged in + In a society
+------------------------------------------------
+
+..code-block:: dart
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Your societies',
+          style: Theme.of(context).textTheme.titleMedium
+              ?.copyWith(fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: 8),
+        SizedBox(
+          height: 140,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: joined.length,
+            separatorBuilder: (_, __) =>
+                const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final s = joined[index];
+              return InkWell(
+                onTap: () => _navigateToSocietyDetails(
+                  s,
+                  initialJoined: true,
+                ),
+                child: SizedBox(
+                  width: 220,
+                  child: Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 28,
+                            child: Icon(s.icon, size: 28),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  s.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  overflow:
+                                      TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '${s.memberCount} members · ${s.rating} ★',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.grey.shade700,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 12),
+      ],
+    );
+  },
+
+
+
