@@ -37,6 +37,7 @@ Error colour: 0xFFBA1A1A
 Text colour: Not fixed, readable contrast via code:
 
 .. code-block:: dart
+
   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
     fontWeight: FontWeight.w700,
 
