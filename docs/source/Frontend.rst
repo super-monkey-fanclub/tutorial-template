@@ -15,5 +15,11 @@ iOS/macOS: San Francisco
 Windows: Segoe UI
 Linux/web: platform/browser default sans-serif chosen by Flutter
 
+Colours
+-------
 
+One consistent colour theme, featuring the colours represented in the University of Portsmouth logo.
 
+Seed colour: 0xFF003087
+Primary colour: 0xFF003087
+Secondary colour: 0xFF7B2D8E
