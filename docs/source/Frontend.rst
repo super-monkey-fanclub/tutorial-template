@@ -212,6 +212,7 @@ Joined societies list - Logged in + Not in any society
       );
     }
 
+If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students
 
 Joined societies list - Logged in + In a society
 ------------------------------------------------
@@ -298,5 +299,5 @@ Joined societies list - Logged in + In a society
     );
   },
 
-
+If you are logged in, then you can view the list of societies.
 
