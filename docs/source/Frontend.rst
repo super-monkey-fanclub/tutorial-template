@@ -164,6 +164,7 @@ This code displays the text at the top of the page, "Welcome" and "Find societie
 Joined societies list - Logged in + Not in any society
 -------------------------------------------------------
 
+
 .. code-block:: dart
 
   if (joined.isEmpty) {
