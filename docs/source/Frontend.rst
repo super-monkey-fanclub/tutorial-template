@@ -137,7 +137,7 @@ This section of code creates the Navigation Bar at the top of the page. It creat
 Intro Text
 -----------
 
-  .. code-block:: dart
+.. code-block:: dart
 
   body: SafeArea(
       child: SingleChildScrollView(
@@ -214,7 +214,7 @@ If you are logged in and not in a society, a menu appears which prompts the user
 Joined societies list - Logged in + In a society
 ------------------------------------------------
 
-..code-block:: dart
+.. code-block:: dart
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,7 +301,7 @@ If you are logged in, then you can view the list of societies.
 Not Logged in
 --------------
 
-..code-block:: dart
+.. code-block:: dart
 
   if (_currentUser == null) ...[
     const SizedBox(height: 8),
