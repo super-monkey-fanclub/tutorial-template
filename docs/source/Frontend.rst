@@ -71,7 +71,6 @@ Theme
         home: const HomePage(),
       );
     }
-  }
 
 This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, annd ensures it is the first page shown to the user when starting the app.
 
