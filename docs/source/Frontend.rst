@@ -301,3 +301,49 @@ Joined societies list - Logged in + In a society
 
 If you are logged in, then you can view the list of societies.
 
+Not Logged in
+--------------
+
+..code-block:: dart
+
+  if (_currentUser == null) ...[
+    const SizedBox(height: 8),
+    Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            const Icon(Icons.login),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Sign in to see your societies',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Create an account or sign in to quickly access societies you\'ve joined.',
+                    style: TextStyle(color: Colors.grey.shade700),
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: _openAuthPage,
+              child: const Text('Sign in'),
+            ),
+          ],
+        ),
+      ),
+    ),
+    const SizedBox(height: 12),
+  ],
+
+If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined.
