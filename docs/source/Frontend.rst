@@ -3,7 +3,7 @@ Frontend
 =============
 
 Overview
-=============
+--------
 
 The front end of this application is different each device. This doc will cover some of the front end choices and inner workings, but in terms of what you can expect to see throughout the app, you can find:
 
@@ -42,7 +42,7 @@ Text colour: Not fixed, readable contrast via code:
     fontWeight: FontWeight.w700,
 
 main.dart
-======
+----------
 
 
 .. _theme:
