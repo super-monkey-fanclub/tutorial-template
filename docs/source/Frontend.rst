@@ -209,7 +209,7 @@ Joined societies list - Logged in + Not in any society
       );
     }
 
-If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students
+If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students. This is checked through the if statement joined.IsEmpty - if the current user has no joined societies, returns a Card shown in-place. Tapping the TextButton calls _openSocietiesPage, which navigates to the societies browsing page.
 
 Joined societies list - Logged in + In a society
 ------------------------------------------------
