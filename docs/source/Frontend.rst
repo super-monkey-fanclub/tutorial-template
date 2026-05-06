@@ -72,7 +72,7 @@ Theme
       );
     }
 
-This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, annd ensures it is the first page shown to the user when starting the app.
+This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, and ensures it is the first page shown to the user when starting the app. The colour scheme is decided through the use of colorScheme.fromSeed(), which chooses 3 colours to base the theme off of. For the Navigation bar, its theme is tetermined by foregroundColor and iconTheme. To ensure the first page is the home page, we use home:const HomePage().
 
 User login data
 ----------------
@@ -132,7 +132,7 @@ Navigation Bar
         ),
       ),
 
-This section of code creates the Navigation Bar at the top of the page. It creates a Account button which links to the login page, an About us button which links to the About Us page, and a search bar used to search for societies. These are all in the far right of the navigation bar, and the search bar extends when pressed. 
+This section of code creates the Navigation Bar at the top of the page. It creates a Account button which links to the login page, an About us button which links to the About Us page, and a search bar used to search for societies. These are all in the far right of the navigation bar, and the search bar extends when pressed. To prompt the user to search for societies, we use the hintText paramater to encourage user to search for societies.
 
 Intro Text
 -----------
@@ -159,7 +159,7 @@ Intro Text
               ).textTheme.bodyMedium?.copyWith(height: 1.35),
             ),
 
-This code displays the text at the top of the page, "Welcome" and "Find societies that match your interests and connect with students faster"
+This code displays the text at the top of the page, "Welcome" and "Find societies that match your interests and connect with students faster". The welcome string is optionally personalised to show a plain "Welcome" when _currentUser is null, or show "Welcome, <name>" when _currentUser exists. If the stored name is null it falls back to "back". The secondary text in the SizedBox adds a height of 8 for vertical spacing.
 
 Joined societies list - Logged in + Not in any society
 -------------------------------------------------------
