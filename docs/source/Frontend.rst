@@ -405,3 +405,8 @@ This text is before the hero carousel and tells the user what to expect. It uses
   }
 
 This is the instantiation of the Hero Carousel. It takes the society name, description, imageURL, icon, member count, average rating, user email and their auth token. The hero carousel generates 14 societies with all this information and automatically scrolls through each one automatically, allowing users to quickly view societies at a glance. Clicking on the society in the hero carousel brings you to the society page, where the user can join the society.
+
+about_us.dart
+--------------
+
+
