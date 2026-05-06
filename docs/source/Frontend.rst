@@ -361,7 +361,7 @@ If the user is not logged in, the box prompts the user to sign in or create an a
 Hero Carousel
 ---------------
 
-.. code-block: dart
+.. code-block:: dart
 
  const SizedBox(height: 18),
   Text(
@@ -376,3 +376,32 @@ Hero Carousel
     style: TextStyle(color: Colors.grey.shade700),
   ),
 
+This text is before the hero carousel and tells the user what to expect. It uses text to display "Featured this week".
+
+.. code-block:: dart
+
+  class _HeroCarouselState extends State<HeroCarousel> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+  Timer? _timer;
+  bool _hovering = false;
+  List<Society> get _societies => widget.societies;
+
+  void _openSocietyDetails(Society society) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => SocietyDetailsPage(
+          name: society.name,
+          description: society.description,
+          imageUrl: society.imageUrl,
+          icon: society.icon,
+          initialMemberCount: society.memberCount,
+          initialAverageRating: society.rating,
+          userEmail: widget.userEmail,
+          userAuthToken: widget.userAuthToken,
+        ),
+      ),
+    );
+  }
+
+This is the instantiation of the Hero Carousel. It takes the society name, description, imageURL, icon, member count, average rating, user email and their auth token. The hero carousel generates 14 societies with all this information and automatically scrolls through each one automatically, allowing users to quickly view societies at a glance. Clicking on the society in the hero carousel brings you to the society page, where the user can join the society.
