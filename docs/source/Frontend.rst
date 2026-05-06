@@ -220,7 +220,7 @@ Joined societies list - Logged in + Not in any society
       );
     }
 
-If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students. This is checked through the if statement joined.IsEmpty - if the current user has no joined societies, returns a Card shown in-place. Tapping the TextButton calls _openSocietiesPage, which navigates to the societies browsing page.
+If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students. This is checked through the if statement joined.IsEmpty - if the current user has no joined societies, returns a Card shown in-place promopting the user to join a society. Tapping the TextButton calls _openSocietiesPage, which navigates to the societies browsing page.
 
 Joined societies list - Logged in + In a society
 ------------------------------------------------
@@ -307,7 +307,7 @@ Joined societies list - Logged in + In a society
     );
   },
 
-If you are logged in, then you can view the list of societies.
+If you are logged in, then you can view the list of societies. There is one Card per joined society.
 
 Not Logged in
 --------------
@@ -354,4 +354,4 @@ Not Logged in
     const SizedBox(height: 12),
   ],
 
-If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined.
+If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined. We can see this by checking if _currentUser == null, meaning that the user has not logged in. Pressing the text button opens the login page, where you can either log in or sign up.
