@@ -44,6 +44,9 @@ Text colour: Not fixed, readable contrast via code:
 main.dart
 ======
 
+
+.. _theme:
+
 Theme
 ------
 
