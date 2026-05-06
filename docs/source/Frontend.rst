@@ -355,3 +355,24 @@ Not Logged in
   ],
 
 If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined. We can see this by checking if _currentUser == null, meaning that the user has not logged in. Pressing the text button opens the login page, where you can either log in or sign up.
+
+.. _heroCarousel:
+
+Hero Carousel
+---------------
+
+.. code-block: dart
+
+ const SizedBox(height: 18),
+  Text(
+    'Featured this week',
+    style: Theme.of(
+      context,
+    ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
+  ),
+  const SizedBox(height: 6),
+  Text(
+    'Explore popular student groups on campus',
+    style: TextStyle(color: Colors.grey.shade700),
+  ),
+
