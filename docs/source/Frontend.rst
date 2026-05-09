@@ -540,3 +540,135 @@ Contact
   ),
 
 This text tells the user how to contact us. Currently, they are just placeholders.
+
+profile.dart
+-------------
+
+Login
+
+.. code-block:: dart
+
+  Widget _buildLoginPage() {
+    return Padding(
+      padding: const EdgeInsets.all(24.0),
+      child: Form(
+        key: _loginKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _loginEmail,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: TextInputType.emailAddress,
+              validator: (val) {
+                if (val == null || val.trim().isEmpty)
+                  return 'Email is required';
+                if (!_isValidEmail(val.trim()))
+                  return 'Enter a valid email address';
+                return null;
+              },
+            ),
+
+This part of the code is used to validate email addresses. We check using the function (not) _isValidEmail. If the result is True, then the email is not valid and a new one must be inputted.
+
+.. code-block:: dart
+
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _loginPassword,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+              validator: (val) {
+                if (val == null || val.isEmpty) return 'Password is required';
+                return null;
+              },
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton(
+              onPressed: _isLoading
+                  ? null
+                  : () async {
+                      if (!_loginKey.currentState!.validate()) return;
+
+                      setState(() => _isLoading = true);
+                      final result = await _authService.login(
+                        email: _loginEmail.text.trim(),
+                        password: _loginPassword.text,
+                      );
+                      setState(() => _isLoading = false);
+
+                      if (result['success'] == true) {
+                        _showMessage('Login successful');
+                        Navigator.of(context).pop(result['user']);
+                      } else {
+                        _showMessage(result['message'] ?? 'Login failed.');
+                      }
+                    },
+              child: const Text('Login'),
+            ),
+            const SizedBox(height: 16),
+            TextButton(
+              onPressed: () => setState(() => _showSignUp = true),
+              child: const Text('Not a member? Sign up now'),
+
+This part of the code is used for the password and authentication. We check that there is a value in the field before being checked against the database.
+
+Logged in
+----------
+
+.. code-block:: dart
+
+  Widget _buildLoggedInView() {
+    final email = widget.currentUser?['email'] as String? ?? '';
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.person, size: 64),
+            const SizedBox(height: 16),
+            const Text(
+              'You are currently signed in as',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              email,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              onPressed: () async {
+                final updated = await Navigator.of(context)
+                    .push<Map<String, dynamic>?>(
+                      MaterialPageRoute(
+                        builder: (_) => AccountSettingsPage(
+                          currentUser: widget.currentUser,
+                        ),
+                      ),
+                    );
+                if (updated != null && updated.containsKey('user')) {
+                  Navigator.of(context).pop(updated['user']);
+                }
+              },
+              icon: const Icon(Icons.settings),
+              label: const Text('Account settings'),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.of(context).pop({'__logout__': true});
+              },
+              icon: const Icon(Icons.logout),
+              label: const Text('Sign out'),
+
+IF you are already logged in and access this page, alternative text is shown. It shows your username, and a button to sign out.
