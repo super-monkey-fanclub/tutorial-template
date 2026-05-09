@@ -858,4 +858,269 @@ Society List
 TODO
 
 
+Reviews/Comments
+-----------------
 
+.. code-block:: dart
+
+  const SizedBox(height: 4),
+    Text('${'★' * r.rating}${'☆' * (5 - r.rating)}'),
+    const SizedBox(height: 8),
+    Text(r.comment),
+    const SizedBox(height: 12),
+
+Comments for each society are displayed in SizedBoxes with a star rating and comment. These values are pulled from the database and help the user gauge an idea of what the society is like.
+
+.. code-blocks:: dart
+
+  if (_joined &&
+    widget.userEmail != null &&
+    _canCreateReview) ...[
+  Text(
+    'Write a review',
+    style: Theme.of(context).textTheme.titleLarge,
+  ),
+  const SizedBox(height: 8),
+  TextField(
+    controller: _reviewName,
+    decoration: const InputDecoration(
+      labelText: 'Name (optional)',
+      border: OutlineInputBorder(),
+    ),
+  ),
+  const SizedBox(height: 12),
+  DropdownButtonFormField<int>(
+    initialValue: _rating,
+    decoration: const InputDecoration(
+      labelText: 'Rating',
+      border: OutlineInputBorder(),
+    ),
+    items: const [1, 2, 3, 4, 5]
+        .map(
+          (v) => DropdownMenuItem<int>(
+            value: v,
+            child: Text('$v / 5'),
+          ),
+        )
+
+To create a review, you must be logged in and be in the society for two weeks. This is checked using userEmail to check if not null, and _canCreateReview as a function to check if the user has been in for two weeks. The user can input their name, comment text, and a rating out of 5.
+
+Polls
+------
+
+Members can vote on polls creted by society admins
+
+.. code-block:: dart
+
+  Future<void> _voteOnPoll(_SocietyPoll poll, _SocietyPollOption option) async {
+    final email = widget.userEmail;
+    if (email == null || email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please log in before voting.')),
+      );
+      return;
+    }
+
+    if (poll.viewerVoteOptionId != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('You can only vote once per poll.')),
+      );
+      return;
+    }
+
+    final result = await _societyService.votePoll(
+      email: email,
+      pollId: poll.id,
+      optionId: option.id,
+      authToken: widget.userAuthToken,
+    );
+
+    if (!mounted) return;
+
+    if (result['success'] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result['message']?.toString() ?? 'Vote recorded.'),
+        ),
+      );
+      await _loadPolls();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            result['message']?.toString() ?? 'Could not vote on poll.',
+          ),
+        ),
+      );
+    }
+  }
+
+Users can only vote one per poll and ahve to be logged in and part of the society. The poll gives a list of options, and when the user selects and submits their vote it is recorded and sent to the database
+
+Society Admins
+--------------
+
+Society admins have special permissions within the society page. They can create polls, reply and delete to comments, and view rating analytics.
+
+To create a poll, the user must be an admin for the society.
+
+  Future<void> _showCreatePollDialog() async {
+    final email = widget.userEmail;
+    if (email == null || email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please log in as an admin to create polls.'),
+        ),
+      );
+      return;
+    }
+
+
+.. code-block:: dart
+
+  const SizedBox(height: 12),
+    if (_loading)
+      const Center(child: CircularProgressIndicator())
+    else if (_infoItems.isEmpty && _polls.isEmpty)
+      Card(
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Text(
+            (_canCreatePoll || _canCreateInfo)
+                ? 'No posts yet. Use the top buttons to add information or a poll.'
+                : 'No posts available right now.',
+            style: TextStyle(color: Colors.grey.shade700),
+          ),
+        ),
+      )
+
+This code shows current polls. If there are no polls active at the time, the user is prompted to create one using buttons at the top.
+
+.. code-block:: dart
+
+  if (_canCreatePoll)
+    PopupMenuButton<String>(
+      tooltip: 'Manage poll',
+      onSelected: (value) async {
+        if (value == 'add_option') {
+          await _showAddOptionDialog(poll);
+        } else if (value == 'delete_option') {
+          await _showDeleteOptionDialog(poll);
+        } else if (value == 'delete_poll') {
+          await _deletePoll(poll);
+        }
+      },
+      itemBuilder: (context) => const [
+        PopupMenuItem<String>(
+          value: 'add_option',
+          child: Text('Add option'),
+        ),
+        PopupMenuItem<String>(
+          value: 'delete_option',
+          child: Text('Delete option'),
+        ),
+        PopupMenuItem<String>(
+          value: 'delete_poll',
+          child: Text('Delete poll'),
+        ),
+      ],
+    ),
+
+This code is how the admin can manage new and existing polls. They can add or delete options, or delete the poll entirely.
+
+.. code-block:: dart
+
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        children: [
+          Expanded(
+            child: Text(
+              info.title.isEmpty ? 'Message' : info.title,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.w700),
+            ),
+          ),
+          const Chip(
+            visualDensity: VisualDensity.compact,
+            label: Text('Info'),
+          ),
+          if (_canCreateInfo)
+            IconButton(
+              tooltip: 'Delete message',
+              onPressed: () => _deleteInfo(info),
+              icon: const Icon(Icons.delete_outline),
+            ),
+        ],
+      ),
+      const SizedBox(height: 4),
+      Text(info.content),
+      const SizedBox(height: 6),
+      Text(
+        'Posted by ${info.adminDisplayName}',
+        style: TextStyle(color: Colors.grey.shade700),
+      ),
+
+Admins can leave messages to society members. This includes a title, text, and who it was posted by.
+
+.. code-block::
+
+  final stats = result['stats'] as Map<String, dynamic>? ?? {};
+  final int totalMembers = stats['total_members'] as int? ?? 0;
+  final int adminCount = stats['admin_count'] as int? ?? 0;
+  final int totalAnnouncements = stats['total_announcements'] as int? ?? 0;
+  final int totalPolls = stats['total_polls'] as int? ?? 0;
+  final int totalReviews = stats['total_reviews'] as int? ?? 0;
+  final int totalReactions = stats['total_reactions'] as int? ?? 0;
+
+Admins can view analytics of their society using a button at th top. This is shown in a popup window, with details such as total members, announcewments, reviews etc.
+
+Additional analytics such as graphs of members and reviews over time are also viewable:
+
+.. code-block:: dart
+
+  const SizedBox(height: 16),
+    Text(
+      'Trends',
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(fontWeight: FontWeight.w700),
+    ),
+    const SizedBox(height: 12),
+    Card(
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Members and reviews over time',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: trends.isEmpty
+                  ? null
+                  : () => _showMembersReviewsTrendDialog(
+                        context: context,
+                        rawTrends: trends,
+                      ),
+              icon: const Icon(Icons.show_chart),
+              label: const Text('View line graph'),
+            ),
+            if (trends.isEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                'No trend data available yet.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+
+This shows the data in a line graph, which is easier to understand for admins and allows them to understand the ratings within their society and whether they ahve improved or not.
