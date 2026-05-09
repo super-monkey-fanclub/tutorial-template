@@ -289,23 +289,6 @@ Joined societies list - Logged in + In a society
                                   style: TextStyle(
                                     color: Colors.grey.shade700,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        const SizedBox(height: 12),
-      ],
-    );
-  },
 
 If you are logged in, then you can view the list of societies. There is one Card per joined society.
 
