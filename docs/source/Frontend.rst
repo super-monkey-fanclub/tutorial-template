@@ -473,5 +473,52 @@ Banner
               ),
             ),
 
-This code creates the main banner. It is located in the top centre of the page, with large white text saying "About Us"s
+This code creates the main banner. It is located in the top centre of the page, with large white text saying "About Us", and serves as an introduction to the main page.
 
+Mission
+------
+
+.. code-block:: dart
+
+    _SectionCard(
+      icon: Icons.flag_outlined,
+      title: 'Our Mission',
+      content:
+          'Unify is a platform built to help University of Portsmouth students '
+          'discover, join, and engage with student societies. We believe that '
+          'university life is about more than just studying — it\'s about '
+          'building friendships, developing skills, and finding your community.',
+    ),
+
+This section of text is located with a card. It includes a title and content text, and layed out in a paragraph format.
+
+What we offer
+--------------
+
+.. code-block:: dart
+
+  _SectionCard(
+      icon: Icons.star_outline,
+      title: 'What We Offer',
+      content: null,
+      child: const Column(
+        children: [
+          _FeatureItem(
+            icon: Icons.search,
+            text: 'Browse and search all student societies in one place',
+          ),
+          _FeatureItem(
+            icon: Icons.rate_review_outlined,
+            text: 'Read and write honest reviews for any society',
+          ),
+          _FeatureItem(
+            icon: Icons.how_to_vote_outlined,
+            text: 'Participate in society polls and decisions',
+          ),
+          _FeatureItem(
+            icon: Icons.notifications_outlined,
+            text: 'Stay up to date with society news and events',
+          ),
+        ],
+      ),
+    ),
