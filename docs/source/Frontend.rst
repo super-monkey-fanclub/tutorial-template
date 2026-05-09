@@ -5,7 +5,8 @@ Frontend
 Overview
 --------
 
-The front end of this application is different each device. This doc will cover some of the front end choices and inner workings, but in terms of what you can expect to see throughout the app, you can find:
+The frontend of the Unify application is designed to provide a consistent, responsive, and user-friendly experience across multiple platforms. While the exact visual output may differ slightly depending on the operating system or device, the overall layout, functionality, and interaction patterns remain consistent throughout the app.
+This document outlines the key frontend design decisions, implementation details, and user interface components used in the application. It also explains how these elements contribute to usability, accessibility, and maintainability.
 
 Fonts
 -----
@@ -671,4 +672,176 @@ Logged in
               icon: const Icon(Icons.logout),
               label: const Text('Sign out'),
 
-IF you are already logged in and access this page, alternative text is shown. It shows your username, and a button to sign out.
+If you are already logged in and access this page, alternative text is shown. It shows your username, and a button to sign out.
+
+Sign up
+--------
+
+.. code-block:: dart
+
+   Widget _buildSignUpPage() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24.0),
+      child: Form(
+        key: _regKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _regName,
+              decoration: const InputDecoration(
+                labelText: 'Preferred name',
+                border: OutlineInputBorder(),
+                helperText: 'Maximum 50 characters',
+              ),
+              maxLength: 50,
+              inputFormatters: [LengthLimitingTextInputFormatter(50)],
+              validator: (val) {
+                if (val == null || val.trim().isEmpty)
+                  return 'Preferred name is required';
+                if (val.trim().length > 50)
+                  return 'Name must be 50 characters or fewer';
+                return null;
+
+This code is for the login screen. It uses an input box to allow the user to choose a preferred name, which the website will refer to them as. The value has to not be null and less than 50 characters.
+
+.. code-block:: dart
+
+  const SizedBox(height: 12),
+    TextFormField(
+      controller: _regEmail,
+      decoration: const InputDecoration(
+        labelText: 'Email',
+        border: OutlineInputBorder(),
+      ),
+      keyboardType: TextInputType.emailAddress,
+      validator: (val) {
+        if (val == null || val.trim().isEmpty)
+          return 'Email is required';
+        if (!_isValidEmail(val.trim()))
+          return 'Enter a valid email address';
+        return null;
+      },
+
+Similarly, there is an input for the email. The email needs to have the @ and . symbol with correct formatting, and we check that with a function.
+
+.. code-block: dart
+
+  const SizedBox(height: 16),
+    TextFormField(
+      controller: _regPassword,
+      decoration: const InputDecoration(
+        labelText: 'Password',
+        border: OutlineInputBorder(),
+      ),
+      obscureText: true,
+      validator: (val) {
+        if (val == null || val.isEmpty) return 'Password is required';
+        return null;
+      },
+    ),
+    const SizedBox(height: 16),
+    TextFormField(
+      controller: _regConfirm,
+      decoration: const InputDecoration(
+        labelText: 'Confirm password',
+        border: OutlineInputBorder(),
+      ),
+      obscureText: true,
+      validator: (val) {
+        if (val == null || val.isEmpty)
+          return 'Please confirm your password';
+        if (val != _regPassword.text) return 'Passwords do not match';
+        return null;
+      },
+    ),
+
+This is the password section for signing up. The user must input two passwords that match and not be empty.
+
+Mailing List
+-------------
+
+.. code-block:: dart
+  
+  const SizedBox(height: 12),
+    CheckboxListTile(
+      value: _regOptIn,
+      onChanged: (v) => setState(() => _regOptIn = v ?? false),
+      title: const Text('Join the mailing list for updates'),
+      controlAffinity: ListTileControlAffinity.leading,
+    ),
+
+If the user wants to join a mailing list, they can check the box.
+
+
+Login Page Button
+------------------
+
+.. code-block:: dart
+
+  const SizedBox(height: 16),
+    TextButton(
+      onPressed: () => setState(() => _showSignUp = false),
+      child: const Text('Already a member? Log in'),
+
+This button takes you to the login page if you are already a member.
+
+socieites.dart
+---------------
+
+Societies
+----------
+
+.. code-block:: dart
+
+  class SocietySummary {
+    final String name;
+    final String description;
+    final String category;
+    final String imageUrl;
+    final IconData icon;
+    final int memberCount;
+    final double averageRating;
+    final bool joined;
+  
+    const SocietySummary({
+      required this.name,
+      required this.description,
+      required this.category,
+      required this.imageUrl,
+      required this.icon,
+      required this.memberCount,
+      required this.averageRating,
+      this.joined = false,
+    });
+
+This is the instantiation of the society summaries. They include the name, description, category etc, and hold all relevant data for the society. Initially when creating your account, you will have joined no societies, so this.joined will be false for all societies. 
+
+Filters
+-------
+
+enum SocietySortOption {
+  alphabeticalAsc,
+  alphabeticalDesc,
+  memberCountHighLow,
+  ratingHighLow,
+}
+
+enum SocietyRatingFilter {
+  any,
+  atLeastOne,
+  atLeastTwo,
+  atLeastThree,
+  atLeastFour,
+}
+
+We can filter societies using these filters. They help the user find the societies they want. They can also use the search bar from the main page.
+
+Society List
+------------
+
+TODO
+
+
+
