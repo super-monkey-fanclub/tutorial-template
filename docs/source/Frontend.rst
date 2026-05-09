@@ -19,6 +19,7 @@ Windows: Segoe UI
 
 Linux/web: platform/browser default sans-serif chosen by Flutter
 
+Using platform-specific fonts improves readability and ensures that the application aligns with user expectations on each device.
 
 Colours
 -------
@@ -41,6 +42,8 @@ Text colour: Not fixed, readable contrast via code:
 
   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
     fontWeight: FontWeight.w700,
+
+This approach ensures that text remains legible across different themes and devices.
 
 main.dart
 ----------
@@ -88,7 +91,7 @@ User login data
   class _HomePageState extends State<HomePage> {
     static const String _sessionUserStorageKey = 'unify.current_user';
 
-This section of code uses a const key for saving/loading the user login data by storing it in local storage.
+This section of code uses a const key for saving/loading the user login data by storing it in local storage. This allows the application to persist user sessions between app launches, improving convenience and reducing the need for repeated logins.
 
 .. _navBar:
 
@@ -140,7 +143,7 @@ Navigation Bar
         ),
       ),
 
-This section of code creates the Navigation Bar at the top of the page. It creates a Account button which links to the login page, an About us button which links to the About Us page, and a search bar used to search for societies. These are all in the far right of the navigation bar, and the search bar extends when pressed. To prompt the user to search for societies, we use the hintText paramater to encourage user to search for societies.
+This section of code creates the Navigation Bar at the top of the page. It creates a Account button which links to the login page, an About us button which links to the About Us page, and a search bar used to search for societies. These are all in the far right of the navigation bar, and the search bar extends when pressed. To prompt the user to search for societies, we use the hintText paramater to encourage user to search for societies. 
 
 .. _welcomeText: 
 
@@ -291,7 +294,9 @@ Joined societies list - Logged in + In a society
                                     color: Colors.grey.shade700,
                                   ),
 
-If you are logged in, then you can view the list of societies. There is one Card per joined society.
+Users who have joined societies see a horizontally scrollable list. Each society is represented by a card which displays name, icon, member count, and rating. Clicking a card opens detailed information
+
+This design improves accessibility and allows quick navigation through user memberships.
 
 Not Logged in
 --------------
@@ -457,7 +462,7 @@ Banner
               ),
             ),
 
-This code creates the main banner. It is located in the top centre of the page, with large white text saying "About Us", and serves as an introduction to the main page.
+This code creates the main banner. It is located in the top centre of the page, with large white text saying "About Us", and serves as an introduction to the main page. It has a fradiend background and a clear tagline.
 
 Mission
 ------
@@ -474,7 +479,14 @@ Mission
           'building friendships, developing skills, and finding your community.',
     ),
 
-This section of text is located with a card. It includes a title and content text, and layed out in a paragraph format.
+This section of text is located with a card. It includes a title and content text, and layed out in a paragraph format. It explains the purpose of the application:
+
+Encourages community building
+
+Highlights student engagement
+
+Emphasises social and academic benefits
+
 
 What we offer
 --------------
@@ -574,7 +586,7 @@ Login
               },
             ),
 
-This part of the code is used to validate email addresses. We check using the function (not) _isValidEmail. If the result is True, then the email is not valid and a new one must be inputted.
+This part of the code is used to validate email addresses. We check using the function (not) _isValidEmail. If the result is True, then the email is not valid and a new one must be inputted. Authentication is handled asynchronously, with loading states and user feedback.
 
 .. code-block:: dart
 
