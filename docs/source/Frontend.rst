@@ -833,20 +833,22 @@ This is the instantiation of the society summaries. They include the name, descr
 Filters
 -------
 
-enum SocietySortOption {
-  alphabeticalAsc,
-  alphabeticalDesc,
-  memberCountHighLow,
-  ratingHighLow,
-}
+.. code-block:: dart
 
-enum SocietyRatingFilter {
-  any,
-  atLeastOne,
-  atLeastTwo,
-  atLeastThree,
-  atLeastFour,
-}
+  enum SocietySortOption {
+    alphabeticalAsc,
+    alphabeticalDesc,
+    memberCountHighLow,
+    ratingHighLow,
+  }
+  
+  enum SocietyRatingFilter {
+    any,
+    atLeastOne,
+    atLeastTwo,
+    atLeastThree,
+    atLeastFour,
+  }
 
 We can filter societies using these filters. They help the user find the societies they want. They can also use the search bar from the main page.
 
