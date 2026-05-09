@@ -522,3 +522,38 @@ What we offer
         ],
       ),
     ),
+
+This text is what we offer to our users. It is formatted in bullet points, using columns to seperate each point.
+
+Team
+-----
+
+.. code-block:: dart
+  
+  _SectionCard(
+    icon: Icons.people_outline,
+    title: 'The Team',
+    content:
+        'Unify was created by a team of University of Portsmouth students '
+        'as part of a software engineering project. Our goal was to build '
+        'a real, useful tool for the student community using modern '
+        'technologies including Flutter and Django.',
+  ),
+
+This section describes us as a team, the software engineers working on the project
+
+Contact
+--------
+
+.. code-block:: dart
+
+  _SectionCard(
+    icon: Icons.mail_outline,
+    title: 'Contact Us',
+    content:
+        'Have a question, suggestion, or spotted a bug? We\'d love to hear '
+        'from you.\n\nEmail: unify-support@placeholder.port.ac.uk\n'
+        'Website: www.placeholder-unify.port.ac.uk',
+  ),
+
+This text tells the user how to contact us. Currently, they are just placeholders.
