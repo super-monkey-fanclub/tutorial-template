@@ -1,4 +1,3 @@
-
 Frontend
 =============
 
@@ -798,6 +797,153 @@ Login Page Button
       child: const Text('Already a member? Log in'),
 
 This button takes you to the login page if you are already a member.
+
+account_settings.dart
+----------------------
+
+Account Settings
+-----------------
+
+.. code-block:: dart
+
+  class AccountSettingsPage extends StatefulWidget {
+    final Map<String, dynamic>? currentUser;
+    const AccountSettingsPage({super.key, this.currentUser});
+
+    @override
+    State<AccountSettingsPage> createState() => _AccountSettingsPageState();
+  }
+
+This is the account settings page. It takes the current user's data as a parameter so it can pre-fill the fields before the user makes any changes.
+
+.. code-block:: dart
+
+  @override
+  void initState() {
+    super.initState();
+    final user = widget.currentUser;
+    if (user != null) {
+      _optIn = user['opt_in_email'] == true;
+      _newEmail.text = user['email'] ?? '';
+    }
+  }
+
+When the page loads, ``initState`` pulls the user's existing email and mailing list preference and fills them in. The user sees their current values rather than blank fields.
+
+Email
+------
+
+.. code-block:: dart
+
+  TextFormField(
+    controller: _newEmail,
+    decoration: const InputDecoration(
+      labelText: 'Email',
+      border: OutlineInputBorder(),
+    ),
+    keyboardType: TextInputType.emailAddress,
+    validator: (val) {
+      if (val == null || val.trim().isEmpty)
+        return 'Email is required';
+      if (!val.contains('@') || !val.contains('.'))
+        return 'Enter a valid email address';
+      return null;
+    },
+  ),
+
+The email field is pre-filled from the current user data. It checks that the value contains both ``@`` and ``.`` before allowing a save.
+
+Current Password
+-----------------
+
+.. code-block:: dart
+
+  TextFormField(
+    controller: _currentPassword,
+    decoration: const InputDecoration(
+      labelText: 'Current password',
+      border: OutlineInputBorder(),
+    ),
+    obscureText: true,
+    validator: (val) {
+      if (val == null || val.isEmpty)
+        return 'Enter your current password';
+      return null;
+    },
+  ),
+
+The current password is required to save any changes at all. It can't be left blank, which stops someone from updating account details on an unattended device.
+
+New Password
+-------------
+
+.. code-block:: dart
+
+  TextFormField(
+    controller: _newPassword,
+    decoration: const InputDecoration(
+      labelText: 'New password (optional)',
+      border: OutlineInputBorder(),
+    ),
+    obscureText: true,
+    validator: (val) {
+      if (val != null && val.isNotEmpty && val.length < 8)
+        return 'Password must be at least 8 characters';
+      return null;
+    },
+  ),
+
+New password is optional. If left blank the existing password stays. If filled in, it has to be at least 8 characters.
+
+Save Settings
+--------------
+
+.. code-block:: dart
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+    setState(() => _isLoading = true);
+
+    final result = await _authService.updateSettings(
+      authToken: authToken,
+      email: widget.currentUser?['email'] as String?,
+      currentPassword: _currentPassword.text.isEmpty
+          ? null
+          : _currentPassword.text,
+      newEmail: _newEmail.text.isEmpty ? null : _newEmail.text.trim(),
+      newPassword: _newPassword.text.isEmpty ? null : _newPassword.text,
+      optInEmail: _optIn,
+    );
+
+    setState(() => _isLoading = false);
+
+    if (result['success'] == true) {
+      _showMessage('Settings updated');
+      Navigator.of(context).pop({'user': result['user']});
+    } else {
+      _showMessage(result['message'] ?? 'Update failed');
+    }
+  }
+
+When the save button is pressed, ``_submit`` runs the form validators first. If they pass, it calls ``_authService.updateSettings`` with only the fields that have values, passing ``null`` for anything left blank. On success it pops back to the profile page and passes the updated user object back, so the rest of the app reflects the changes straight away.
+
+.. code-block:: dart
+
+  ElevatedButton(
+    onPressed: _isLoading ? null : _submit,
+    child: _isLoading
+        ? const SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2,
+            ),
+          )
+        : const Text('Save settings'),
+  ),
+
+The save button disables itself and shows a small loading spinner while the request is in flight. This stops the user from tapping it twice and sending duplicate requests.
 
 socieites.dart
 ---------------
