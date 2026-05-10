@@ -15,15 +15,6 @@ Contents
 
 .. toctree::
 
-   usage
-   login
-   joinsoc
-   review
-   database
-
-
-.. toctree::
-
    Frontend
    Backend
    Database
