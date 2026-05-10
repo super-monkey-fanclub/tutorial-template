@@ -1001,8 +1001,46 @@ We can filter societies using these filters. They help the user find the societi
 Society List
 ------------
 
-TODO
+.. code-block:: 
 
+  Future<void> _loadSocieties() async {
+      try {
+        final res = await _societyService.listSocieties();
+        if (res['success'] == true) {
+          final List<dynamic> raw = res['societies'] as List<dynamic>? ?? [];
+          final mapped = raw.map((e) {
+            final Map<String, dynamic> obj = e as Map<String, dynamic>;
+            final name = (obj['name'] ?? obj['title'] ?? '').toString();
+            final description = (obj['description'] ?? '').toString();
+            final category = (obj['category'] ?? 'General').toString();
+            final rawImage = (obj['image_url'] ?? obj['image'] ?? obj['imageUrl'] ?? obj['picture'] ?? '').toString();
+            final imageUrl = _normalizeImageUrl(rawImage);
+            final memberCount = (obj['member_count'] ?? obj['members'] ?? 0) as int? ?? 0;
+            final avg = ((obj['average_rating'] ?? obj['rating']) as num?)?.toDouble() ?? 0.0;
+            return SocietySummary(
+              name: name,
+              description: description,
+              category: category,
+              imageUrl: imageUrl,
+              icon: Icons.group,
+              memberCount: memberCount,
+              averageRating: avg,
+            );
+          }).toList();
+          if (!mounted) return;
+          setState(() {
+            _allSocieties = mapped;
+            _filteredSocieties = List.from(_allSocieties);
+          });
+          return;
+        }
+      } catch (_) {
+        // ignore
+      }
+      if (mounted) setState(() {});
+    }
+
+To show the user the list of societies, we pull values from the datgabase including the name, description, image URL, and average ratings. At the top of the page there is a filter that can be used to search throguh these societies more efficeintly, such as through alphabetical ascending or descending, average rating and nnumber of reviews.
 
 Reviews/Comments
 -----------------
