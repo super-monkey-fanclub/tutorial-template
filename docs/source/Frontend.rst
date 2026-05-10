@@ -78,7 +78,7 @@ Theme
       );
     }
 
-This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, and ensures it is the first page shown to the user when starting the app. The colour scheme is decided through the use of colorScheme.fromSeed(), which chooses 3 colours to base the theme off of. For the Navigation bar, its theme is tetermined by foregroundColor and iconTheme. To ensure the first page is the home page, we use home:const HomePage().
+This section of code initialises the color scheme throughout the whole program, the navigation bar color scheme, and ensures it is the first page shown to the user when starting the app. The colour scheme is decided through the use of ``colorScheme.fromSeed()``, which chooses 3 colours to base the theme off of. For the Navigation bar, its theme is tetermined by foregroundColor and iconTheme. To ensure the first page is the home page, we use home:const HomePage().
 
 .. _loginData:
 
@@ -171,7 +171,7 @@ Intro Text
               ).textTheme.bodyMedium?.copyWith(height: 1.35),
             ),
 
-This code displays the text at the top of the page, "Welcome" and "Find societies that match your interests and connect with students faster". The welcome string is optionally personalised to show a plain "Welcome" when _currentUser is null, or show "Welcome, <name>" when _currentUser exists. If the stored name is null it falls back to "back". The secondary text in the SizedBox adds a height of 8 for vertical spacing.
+This code displays the text at the top of the page, "Welcome" and "Find societies that match your interests and connect with students faster". The welcome string is optionally personalised to show a plain "Welcome" when ``_currentUser`` is null, or show "Welcome, <name>" when _currentUser exists. If the stored name is null it falls back to "back". The secondary text in the SizedBox adds a height of 8 for vertical spacing.
 
 .. _socList: 
 
@@ -223,7 +223,7 @@ Joined societies list - Logged in + Not in any society
       );
     }
 
-If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students. This is checked through the if statement joined.IsEmpty - if the current user has no joined societies, returns a Card shown in-place promopting the user to join a society. Tapping the TextButton calls _openSocietiesPage, which navigates to the societies browsing page.
+If you are logged in and not in a society, a menu appears which prompts the users to search for societies and connect with more students. This is checked through the if statement joined.IsEmpty - if the current user has no joined societies, returns a Card shown in-place promopting the user to join a society. Tapping the TextButton calls ``_openSocietiesPage``, which navigates to the societies browsing page.
 
 Joined societies list - Logged in + In a society
 ------------------------------------------------
@@ -342,7 +342,7 @@ Not Logged in
     const SizedBox(height: 12),
   ],
 
-If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined. We can see this by checking if _currentUser == null, meaning that the user has not logged in. Pressing the text button opens the login page, where you can either log in or sign up.
+If the user is not logged in, the box prompts the user to sign in or create an account to quickly access societies you've joined. We can see this by checking if ``_currentUser == null``, meaning that the user has not logged in. Pressing the text button opens the login page, where you can either log in or sign up.
 
 .. _heroCarousel:
 
@@ -1049,7 +1049,7 @@ Comments for each society are displayed in SizedBoxes with a star rating and com
           ),
         )
 
-To create a review, you must be logged in and be in the society for two weeks. This is checked using userEmail to check if not null, and _canCreateReview as a function to check if the user has been in for two weeks. The user can input their name, comment text, and a rating out of 5.
+To create a review, you must be logged in and be in the society for two weeks. This is checked using userEmail to check if not null, and ``_canCreateReview`` as a function to check if the user has been in for two weeks. The user can input their name, comment text, and a rating out of 5.
 
 Polls
 ------
